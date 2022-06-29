@@ -1,0 +1,128 @@
+<!-- <div class="mb-4">
+    <a routerLink="/users/add"><button class="addbtn">Add User</button></a>
+</div> -->
+<div class="mb-4 d-flex justify-content-end position-relative" style="height: 35px;">
+    
+    <div class="alert alert-success" *ngIf="success"  [hidden]="displayPopup">        
+        <div class="alert-success"><i class="fa fa-check-circle"></i> {{success}}</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error" [hidden]="displayPopup">        
+        <div class="alert-danger"><i class="fa fa-time-circle"></i> {{error}}</div>
+      </div>
+    <button class="btn btn-danger" (click)="openMultiple(content)" ><i class="fa fa-trash"></i> Delete Users</button>
+
+</div>
+<table datatable [dtOptions]="dtOptions" class="row-border hover datatable" width="100%">
+  <thead>
+    <tr>
+      <th class="select-checkbox">
+        <input type="checkbox" name="all"   [(ngModel)]="isAllChecked" (change)="checkAll($event)"/>
+       </th>
+      <th >SR#</th>
+      <th>Image</th>
+      <th>First name</th>      
+      <th>Mobile</th>
+      <th>Email Address</th>
+      <!-- <th>Gender</th> -->
+      <!-- <th>Created Date</th> -->
+      <th style="width: 150px!important; text-align: center">Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="persons?.length != 0">
+    <tr *ngFor="let person of persons; let i = index">
+      <td class="select-checkbox">
+        <input type="checkbox" name="sizecb[]" value="{{person._id}}" [(ngModel)]="allCheckedUsers[pageNo == 1 ? i :  i + (pageNo - 1) * pageSize].checked"/>       
+<!--         {{allCheckedUsers[pageNo == 1 ? i :  i + (pageNo - 1) * pageSize] | json}}
+        {{pageNo == 1 ? i :  i + (pageNo - 1) * pageSize}}
+ -->      </td>
+      <td>{{startRowCount+i+1}}</td>
+      <td><img src="{{person.image}}" height="50" width="50" /></td>
+      <td class="ellipsis">{{ person.firstName }}</td>
+      <td>{{ person.mobileNo }}</td>
+      <td>{{ person.emailAddress }}</td>
+      <!-- <td *ngIf="person.genderId == 1">Male</td>
+      <td *ngIf="person.genderId == 2">Female</td>
+      <td *ngIf="person.genderId == 0">Other</td> -->
+      <!-- <td>{{person.createdDateTime| date : 'yyyy-MM-dd' }}</td> -->
+      <td class="action" align="right">
+
+                <button type="button" (click)="openCreditModal(creditContent, person.userId, person.emailAddress)" class="btn-sm addbtn"><i class="fa fa-plus-circle"></i> Credit</button> &nbsp;
+                <a (click)="open(content, person.userId)" class="text-danger"><img src="assets/img/icons/delete.png" title="Remove"/></a>&nbsp;
+                <a [routerLink]="['/users/transactions/', person.userId]" class="text-danger" title="View Transactions"><img src="assets/img/icons/subcategory.png" title="Transactions"/></a>
+            </td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="persons?.length == 0">
+        <tr>
+            <td colspan="7" class="no-data-available">No data!</td>
+        </tr>
+        <tbody>
+</table>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Confirm</h4>
+        <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+    </div>
+    <div class="modal-body" style="font-size: 22px">
+        Are you sure want to delete?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="addbtn" (click)="deleteUser(userId)">Yes</button>
+        <button type="button" class="addbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+    </div>
+</ng-template>
+
+
+<ng-template #creditContent let-modal>
+    <form [formGroup]="addCreditForm" (ngSubmit)="onSubmitCredit(addCreditForm.value)">
+        <div class="modal-header">
+            <h4 class="modal-title text-center" id="modal-basic-title">Add Credit to <span class="spanmodal">{{userName}}</span></h4>
+            <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+     
+      <div class="alert-danger" *ngIf="error"> <i class="fa fa-times-circle pl-2"></i> {{error}}</div>
+      <div class="form-group row">
+        <div class="col-md-12 text-left">
+          <label>Price</label>
+          <input name="price" digit="6" decimal="2" formControlName="price"  type="text" autocomplete="off" class="form-control" appTwoDigitDecimaNumber1>
+          <div *ngFor="let validation of validation_messages.price">
+            <div class="text-danger"
+              *ngIf="addCreditForm.get('price').hasError(validation.type) && (addCreditForm.get('price').dirty || invalidForm )">
+              <strong>{{validation.message}}</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-12 text-left">
+          <label>Message</label>
+          <textarea name="message" formControlName="message" maxLength="100" class="form-control" rows="3"></textarea>
+          <span style="color:#da7e0e">Max Character Limit is 100</span>
+          <div class="text-danger" *ngIf="MessageError"><strong>Message can't be empty.</strong></div>
+          <div *ngFor="let validation of validation_messages.message">
+            <div class="text-danger"
+              *ngIf="addCreditForm.get('message').hasError(validation.type) && (addCreditForm.get('message').dirty|| invalidForm)">
+              <strong>{{validation.message}}</strong></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <input type="Submit" name="Submit" id="Submit"  value="Add" class="addbtn">
+      <div class="loadbtn">
+      <img *ngIf="loading" class="pl-2"
+        src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+      </div>
+      <a class="addbtn" (click)="modal.close()">Cancel</a>
+    </div>
+  </form>
+</ng-template>
+<hr>
+

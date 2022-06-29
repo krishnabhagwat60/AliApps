@@ -1,0 +1,55 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="card-group mt-5">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="alert alert-success" *ngIf="success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div class="alert-success">{{success}}</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div class="alert-danger">{{error}}</div>
+      </div>
+      <form [formGroup]="addDegreeForm">
+        <div class="row">
+          <div class="col-md-3">
+            <img src="{{imageSrc}}" height="200" width="200">
+          </div>
+          <div class="col-md-6 ">
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label><b>Username: </b></label>
+                {{feedbackDetail.userName}}
+              </div>
+              <div class="col-md-12">
+                <label><b>Email Address: </b></label>
+                {{feedbackDetail.emailAddress}}
+              </div>
+              <div class="col-md-12">
+                <label><b>Mobile: </b></label>
+                {{feedbackDetail.mobileNo}}
+              </div>
+              <div class="col-md-12">
+                <label><b>Gender: </b></label>
+                
+                <span *ngIf="feedbackDetail.genderId == 2">Female</span>
+                <span *ngIf="feedbackDetail.genderId == 1">Male</span>
+              </div>
+              <div class="col-md-12">
+                <label><b>Feedback: </b></label>
+                <span> {{feedbackDetail.feedback}} </span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+            <a routerLink="/feedback"><button class="addbtn"><i class="fa fa-reply"></i> Go Back</button></a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+<!-- /.box-body -->

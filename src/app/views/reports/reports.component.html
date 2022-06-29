@@ -1,0 +1,211 @@
+<div class="row">
+  
+  <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+    
+  </div>
+
+  <div class="col-sm-12">
+    <form>
+      <div class="form-group row">
+        <div class="col-sm-2 pr-0">
+          <label><b>Scope</b></label>
+          <select class="form-control" (change)="onDayMonthYrChange($event.target.value)">
+            <option value="1">Daily</option>
+            <option value="2">Weekly</option>
+            <option value="3">Monthly</option>
+            <option value="4">Yearly</option>
+          </select>
+        </div>
+        <div class="col-sm-2 pr-0">
+          <label><b>From Date</b></label>
+          <input type="date" [(ngModel)]="commonFromDate" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Input field">
+        </div>
+        <div class="col-sm-2 pr-0">
+          <label><b>To Date</b></label>
+          <input type="date" [(ngModel)]="commonToDate" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Input field">
+        </div>
+        <div class="col-sm-2 pr-0">
+          <label>&nbsp;</label>
+          <button type="button" class="form-control btn btn-primary" (click)="getSummaryReports()" [disabled]="disableBtn">Get Report</button>
+        </div>
+        
+        <div class="col-sm-2 pr-0">
+          <label><b>Total User</b></label>
+          <div class="card card-body card-accent-warning text-center p-0 m-0"><span class="font-weight-bold" style="height: 32px;padding: 0.375rem 0.75rem;">{{totalUserCount}}</span></div>
+        </div>
+        <div class="col-sm-2 pr-0">
+          <label><b>Total Feedback</b></label>
+          <div class="card card-body card-accent-warning text-center p-0 m-0"><span class="font-weight-bold" style="height: 32px;padding: 0.375rem 0.75rem;">{{totalFeedbacksReport}}</span></div>
+        </div>
+        <div class="col-sm-12 offset-2">
+          <div class="text-danger" *ngIf="errorMessage">
+            <strong>{{errorMessage}}</strong>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-sm-12 mt-2">
+    <div class="row align-items-center">
+      <div class="col-sm-4 pr-0">
+        <h5 class="report-title"><span>Age Group Report</span></h5>
+        <table datatable [dtOptions]="ageGroupOptions" class="row-border hover datatable reportgrid" width="100%">
+          <thead>
+            <tr>
+              <!-- <th>Group</th> -->
+              <th>Age</th>
+              <th>Male</th>
+              <th>Female</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="ageGroupReport?.length != 0">
+            <tr *ngFor="let rowData of ageGroupReport; let i = index">
+              <!-- <td>{{ rowData.ageGroupName }}</td> -->
+              <td>{{ ((rowData.fromAge > 0) ? rowData.fromAge : 0) +' - '+ ((rowData.toAge > 0) ? rowData.toAge : 'more') }}</td>
+              <td class="text-right">{{ rowData.registerdMale }}</td>
+              <td class="text-right">{{ rowData.registerdFemale }}</td>
+              <td class="text-right">{{ rowData.total }}</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="ageGroupReport?.length == 0">
+            <tr>
+              <td colspan="4" class="no-data-available">No data!</td>
+            </tr>
+          <tbody>
+          <tfoot>
+            <tr class="ageGroupFooter">
+            <th>Total</th>
+            <th class="text-right"></th>
+            <th class="text-right"></th>
+            <th class="text-right"></th>
+            </tr>
+          </tfoot>
+        </table>
+
+        <!-- <h5 class="report-title pt-5"><span>Total Feedback</span></h5>
+        <div class="card card-body card-accent-warning text-center p-0"><span class="fa-3x font-weight-bold">{{totalFeedbacksReport}}</span></div> -->
+      </div>
+      <div class="col-sm-4 pr-0">
+        <h5 class="report-title"><span>Country Wise User Report</span></h5>
+        <table datatable [dtOptions]="countryWiseUserOptions" class="row-border hover datatable reportgrid" width="100%">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th class="customWidth">Total User</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="countryWiseUserReport?.length != 0">
+            <tr *ngFor="let rowData of countryWiseUserReport; let i = index">
+              <td> {{ rowData.countryName }}</td>
+              <td class="text-right"> {{ rowData.totalRegisteredUser }}</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="countryWiseUserReport?.length == 0">
+            <tr>
+              <td colspan="2" class="no-data-available">No data!</td>
+            </tr>
+          <tbody>
+          <tfoot>
+            <tr class="countryUserFooter">
+            <th>Total</th>
+            <th class="text-right" style="padding-right: 35px;"></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="col-sm-4">
+        <!-- <h5 class="report-title"></h5> -->
+        <div style="display: block;">
+          <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+            [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend" class="m-auto">
+          </canvas>
+        </div>
+      </div>
+      <div class="col-sm-12 mt-4 mb-3" style="min-height: 440px;">
+        <h5 class="report-title"><span>Earning Report</span></h5>
+        <table datatable id="adminCommissionReport" [dtOptions]="consultatAdminCommissionOptions" [dtTrigger]="dtTrigger" class="row-border hover datatable reportgrid adminCommissionReportGrid" width="100%">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th class=" text-right">Paid To Consultant(KD)</th>
+              <th class=" text-right">Commission(KD)</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="consultatAdminCommissionReport?.length != 0">
+            <tr *ngFor="let rowData of consultatAdminCommissionReport; let i = index">
+              <td>{{ rowData.firstName + ' ' + rowData.lastName }}</td>
+              <td>{{ rowData.emailAddress }}</td>
+              <td>{{ rowData.mobileNo }}</td>
+              <td class="text-right">{{ rowData.totalProvidePrice }}</td>
+              <td class="text-right">{{ rowData.totalCommission }}</td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="consultatAdminCommissionReport?.length == 0">
+            <tr>
+              <td colspan="5" class="text-center no-data-available">No data!</td>
+            </tr>
+          <tbody>
+          <tfoot>
+            <tr class="earningCommissionFooter">
+              <th></th>
+              <th></th>
+              <th>Total</th>
+              <th class="text-right" style="padding-right: 35px;"></th>
+              <th class="text-right" style="padding-right: 35px;"></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+    <div class="card-group mt-5">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="reportForm" action="" method="POST" (ngSubmit)="onSubmit(reportForm.value)" role="form">
+          <div class="form-group">
+            <label for="">From Date</label>
+            <input type="date" formControlName="fromDate" class="form-control" id="" placeholder="Input field" [max]="todayDate" [min]="minDate" onkeydown="return false">
+            <div *ngFor="let validation of validation_messages.fromDate">
+              <div class="text-danger"
+                *ngIf="reportForm.get('fromDate').hasError(validation.type) && (reportForm.get('fromDate').dirty || reportForm.get('fromDate').touched)">
+                <strong>{{validation.message}}</strong></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="">To Date</label>
+            <input type="date" formControlName="toDate" class="form-control" id="" placeholder="Input field" [max]="todayDate" [min]="minDate" onkeydown="return false">
+            <div *ngFor="let validation of validation_messages.toDate">
+              <div class="text-danger"
+                *ngIf="reportForm.get('toDate').hasError(validation.type) && (reportForm.get('toDate').dirty || reportForm.get('toDate').touched)">
+                <strong>{{validation.message}}</strong></div>
+            </div>
+            <div class="text-danger"
+                *ngIf="errorMessage">
+                <strong>{{errorMessage}}</strong></div>            
+          </div>
+
+          <button type="submit" class="btn btn-primary">Get Report</button>
+        </form>
+      </div>
+      </div>
+    </div>
+  </div> -->
+  <!-- <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 offset-3 my-4">
+    <div style="display: block;">
+      <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+        [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+      </canvas>
+    </div>
+  </div> -->
+  
+  <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+    
+  </div>
+  
+</div>

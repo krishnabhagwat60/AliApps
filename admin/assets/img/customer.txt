@@ -1,0 +1,22 @@
+ [
+        {
+            "lookupDetails_Id": "5cc1bf8bdbe49709ec1fa243",
+            "lookupValue": "BS"
+        },
+        {
+            "lookupDetails_Id": "5cc1c247dbe49709ec1fa268",
+            "lookupValue": "MFA"
+        },
+        {
+            "lookupDetails_Id": "5cc1c249dbe49709ec1fa269",
+            "lookupValue": "MMIS"
+        },
+        {
+            "lookupDetails_Id": "5cc1c24ddbe49709ec1fa26a",
+            "lookupValue": "PhD"
+        },
+        {
+            "lookupDetails_Id": "5cc1c24fdbe49709ec1fa26b",
+            "lookupValue": "Cert"
+        }
+    ]

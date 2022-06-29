@@ -1,0 +1,66 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="card-group mt-5">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="alert alert-success" *ngIf="success"  [hidden]="displayPopup">        
+        <div class="alert-success"><i class="fa fa-check-circle"></i> {{success}}</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error" [hidden]="displayPopup" style="max-width:39%">        
+        <div class="alert-danger"><i class="fa fa-times-circle"></i> {{error}}</div>
+      </div>
+      <form [formGroup]="addConfigurationForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6 ">
+            <div class="form-group row">
+              <input type="hidden" formControlName="system_configuration_Id">
+              <div class="col-md-12">
+                <label>Minimum Withdrawal Amount</label>
+                <input maxLength="6" formControlName="minimum_withdrawal_amount_request" type="text" class="form-control">
+                <div *ngFor="let validation of validation_messages.minimum_withdrawal_amount_request">
+                  <div class="text-danger"
+                    *ngIf="addConfigurationForm.get('minimum_withdrawal_amount_request').hasError(validation.type) && (addConfigurationForm.get('minimum_withdrawal_amount_request').dirty || addConfigurationForm.get('minimum_withdrawal_amount_request').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Admin Email Address</label>
+                <input maxLength="50" formControlName="admin_email_address_for_notify" type="text" class="form-control">
+                <div *ngFor="let validation of validation_messages.admin_email_address_for_notify">
+                  <div class="text-danger"
+                    *ngIf="addConfigurationForm.get('admin_email_address_for_notify').hasError(validation.type) && (addConfigurationForm.get('admin_email_address_for_notify').dirty || addConfigurationForm.get('admin_email_address_for_notify').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>WhatsApp Number</label>
+                <input maxLength="18" formControlName="whatsapp_mobile_no" type="tel" class="form-control">
+                <div *ngFor="let validation of validation_messages.whatsapp_mobile_no">
+                  <div class="text-danger"
+                    *ngIf="addConfigurationForm.get('whatsapp_mobile_no').hasError(validation.type) && (addConfigurationForm.get('whatsapp_mobile_no').dirty || addConfigurationForm.get('whatsapp_mobile_no').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <input type="Submit" name="Submit" id="Submit" [disabled]="!addConfigurationForm.valid" value="Submit"
+            class="btn btn-sub">
+            <a class="ml-2" routerLink="/configuration"><button class="addbtn">Cancel</button></a>
+            <div class="loadbtn">
+          <img *ngIf="loading" class="pl-2"
+            src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+<!-- /.box-body -->

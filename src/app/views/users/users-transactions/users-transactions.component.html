@@ -1,0 +1,54 @@
+<div class="mb-4">
+  <a routerLink="/users"><button class="addbtn"><i class="fa fa-reply"></i> Go Back</button></a>
+  <span class="pull-right wallet">Wallet Balance: {{walletBalance|number : '1.0'}} KD </span>
+</div>
+
+<table datatable [dtOptions]="dtOptions" class="row-border hover datatable" width="100%">
+  <thead>
+    <tr>
+      <th>SR#</th>
+      <th>Image</th>
+      <th>Name</th>
+      <th style="text-align:right">Price(KD)</th>
+      <th  style="text-align:left; padding: 10px 25px;">Transaction Date</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="transactions?.length != 0">
+    <tr *ngFor="let transaction of transactions; let i = index">
+      <td>{{startRowCount+i+1}}</td>
+      <td><img src="{{transaction.image}}" height="50" width="50" /></td>
+      <td> {{ transaction.providerName }}</td>
+      <td align="right"> {{ transaction.price.toFixed(0) }}</td>
+      <td> {{transaction.createdDateTime| date:'dd-MMM-yyyy, HH:mm'}}</td>
+      <!-- <td class="action">
+        <a [routerLink]="['/categories/edit/', category.categoryId]" class="text-danger"><i class="fa fa-edit"></i></a>
+        &nbsp;
+        <a (click)="open(content, category.categoryId)" class="text-danger"><i class="fa fa-trash"></i></a>
+      </td> -->
+    </tr>
+  </tbody>
+  <tbody *ngIf="transactions?.length == 0">
+    <tr>
+      <td colspan="8" class="no-data-available">No Record Found!</td>
+    </tr>
+  <tbody>
+</table>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+  <div class="modal-body">
+    Are you sure want to delete?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="deleteCategory(categoryId)">Yes</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+
+
+
+<hr>

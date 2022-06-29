@@ -1,0 +1,51 @@
+.action a{
+    font-size: 20px;
+}
+.datatable{
+    border-radius: 5px; 
+    tr{
+        border-radius: 5px; 
+    th{
+        background: #F5C403;
+        &:first-child{
+            border-radius: 5px 0 0 0; 
+        }
+        &:last-child{
+            border-radius: 0 5px 0 0; 
+        }      
+    }
+    &:last-child{
+        td{
+            &:first-child{
+                border-radius: 5px 0 0 0; 
+            }
+            &:last-child{
+                border-radius: 0 5px 0 0; 
+            }   
+        }
+    }
+}
+}
+table.dataTable thead {
+    .sorting_asc {
+    background: #F5C403;
+    background-image: url(../../../assets/img/sort_asc.png);
+    background-repeat: no-repeat;
+    background-position: center left; 
+    }
+    .sorting_desc {
+    background: #F5C403;
+    background-image: url(../../../assets/img/sort_desc.png);
+    background-repeat: no-repeat;
+    background-position: center left; 
+    }
+}
+.datatable th:nth-child(2), .datatable td:nth-child(2){
+    width: 70px !important;
+}
+.datatable th:last-child, .datatable td:last-child{
+    width: 75px !important;
+}
+.datatable th:nth-child(3), .datatable td:nth-child(3){
+    width: 780px !important;
+}

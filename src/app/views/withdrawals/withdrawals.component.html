@@ -1,0 +1,64 @@
+<div class="mb-4 d-flex justify-content-end position-relative" style="height: 35px;">
+    
+    <div class="alert alert-success" *ngIf="success"  [hidden]="displayPopup">        
+        <div class="alert-success"><i class="fa fa-check-circle"></i> {{success}}</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error" [hidden]="displayPopup">        
+        <div class="alert-danger"><i class="fa fa-time-circle"></i> {{error}}</div>
+      </div>
+</div>
+<table datatable [dtOptions]="dtOptions" class="row-border hover datatable" width="100%" *ngIf="showTable">
+  <thead>
+    <tr>
+      <th>SR#</th>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th >Mobile</th>
+      <th align="right" style="text-align: right;">Price(KD)</th>
+      <th>Request Date</th>
+      <th>Withdraw Date</th>
+      <th style="text-align: center">Status</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="plans?.length != 0">
+    <tr *ngFor="let withdrawal of withdrawals; let i = index">
+      <td>{{startRowCount+i+1}}</td>
+      <td> <img src="{{withdrawal.image}}" height="50" width="50" /></td>
+      <td class="ellipsis"> {{ withdrawal.userName }}</td>
+      <td> {{ withdrawal.emailAddress }}</td>
+      <td> {{ withdrawal.mobileNo }}</td>
+      <td align="right" > {{ withdrawal.price.toFixed(0) }}</td>
+      <td> {{ withdrawal.requestDateTime | date:'dd-MMM-yyyy, HH:mm'}}</td>
+      <td> {{ withdrawal.withdrawDateTime| date:'dd-MMM-yyyy, HH:mm' }}</td>
+      <td *ngIf="withdrawal.isWithdraw == false" align="right"> <button
+          (click)="openPaylModal(content, withdrawal.withdrawDetailsId, withdrawal.userName)"
+          class="btn-sm addbtn">Pay</button></td>
+      <td *ngIf="withdrawal.isWithdraw == true" align="right"> <span class="text-success">Paid</span></td>
+  </tbody>
+  <tbody *ngIf="withdrawals?.length == 0">
+    <tr>
+      <td colspan="3" class="no-data-available">No data!</td>
+    </tr>
+  <tbody>
+</table>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Withdrawal</h4>
+  </div>
+  <div class="modal-body">
+    Are you sure want to Pay to {{withdrawEmail}}?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="PayWithdraw(withdrawId)">Yes</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+
+
+
+<hr>
+
+<pre>{{closeResult}}</pre>

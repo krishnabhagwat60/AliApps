@@ -1,0 +1,328 @@
+<!-- SELECT2 EXAMPLE -->
+
+<div class="card-group mt-5">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="alert alert-success" *ngIf="success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div class="alert-success">{{success}}</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div class="alert-danger">{{error}}</div>
+      </div>
+      <form [formGroup]="addConsultantForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-12 text-center profilepic">
+            <input type="file" class="inputfile" formControlName="image" name="your_picture" ng2FileSelect
+              [uploader]="uploader" accept="image/jpeg, image/png" id="your_picture" (change)="readURL($event);" />
+            <input type="hidden" class="inputfile" formControlName="image1" name="" id="" />
+            <label for="your_picture">
+              <figure>
+                <img [src]="imageSrc || 'assets/img/placeholder.png'" alt="" class="your_picture_image">
+              </figure>
+              <span class="file-button">
+                <i class="fa fa-plus"></i></span>
+            </label>
+            <span class="hints" style="color:#da7e0e">Please upload only .jpg, .png images</span>
+            <span class="text-danger" *ngIf="imageValidate == false">Please upload only .jpg, .png images</span>
+            <!-- <div *ngFor="let validation of validation_messages.image">
+              <div class="text-danger"
+                *ngIf="addCategoryForm.get('image').hasError(validation.type) && (addCategoryForm.get('image').dirty || addCategoryForm.get('image').touched)">
+                <strong>{{validation.message}}</strong></div>
+            </div> -->
+          </div>
+          <div class="col-md-6 mt-3">
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Name</label>
+                <input name="firstName" maxLength="30" formControlName="firstName" type="text" class="form-control">
+                <div class="text-danger" *ngIf="NameError"><strong>Name can't be empty.</strong></div>
+                <div *ngFor="let validation of validation_messages.firstName">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('firstName').hasError(validation.type) && (addConsultantForm.get('firstName').dirty || addConsultantForm.get('firstName').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Mobile No</label>
+                <input type="text" digit="25" formControlName="mobileNo" appTwoDigitDecimaNumber class="form-control">
+                <div *ngIf="MobileNOError && !addConsultantForm.get('mobileNo').errors && submitted" class="text-danger"><strong>{{MobileNOError}}</strong></div>
+                <div *ngFor="let validation of validation_messages.mobileNo">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('mobileNo').hasError(validation.type) && (addConsultantForm.get('mobileNo').dirty || addConsultantForm.get('mobileNo').touched)">
+                    <strong>{{validation.message}}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Gender</label>
+                <div class="radio">
+                  <label for="super-happy">
+                    <input type="radio" name="gender" (click)="genderOnCheck($event)" formControlname="genderId"
+                      class="male" id="super-happy" value="1" checked>
+                    <samp><i class="fa fa-mars" data-id="1"></i></samp>
+                    <span>Male</span>
+                  </label>
+                  <label for="happy">
+                    <input type="radio" name="gender" (click)="genderOnCheck($event)" formControlname="genderId"
+                      class="female" id="happy" value="2">
+                    <samp><i class="fa fa-venus" data-id="2"></i></samp>
+                    <span>Female</span>
+                  </label>
+                </div>
+
+                <!-- <label for="super-happy">
+                <input type="radio"  formControlname="genderId" value="1" class="male" id="super-happy" />
+                <samp><i class="fa fa-mars"></i></samp>
+                <span>Male</span>
+              </label>
+
+              <label for="happy">
+                <input type="radio" formControlname="genderId" value="2" class="female" id="happy" checked />
+                <samp><i class="fa fa-venus"></i></samp>
+                <span>Female</span>
+              </label> -->
+                <div *ngFor="let validation of validation_messages.genderId">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('genderId').hasError(validation.type) && (addConsultantForm.get('genderId').dirty || addConsultantForm.get('genderId').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Category</label>
+
+                <select class="form-control" formControlName="categoryId"
+                  (change)="getSubcategories($event.target.value, categories)" *ngIf="categories?.length != 0">
+
+                  <option value="">Select</option>
+                  <option *ngFor="let category of categories" [value]="category.categoryId">
+                    {{category.categoryName}}
+                  </option>
+
+                </select>
+                <div *ngFor="let validation of validation_messages.categoryId">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('categoryId').hasError(validation.type) && (addConsultantForm.get('categoryId').dirty || addConsultantForm.get('categoryId').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Sub Category</label>
+                <select class="form-control" formControlName="subCategoryId">
+
+                  <option value="">Select</option>
+                  <option *ngFor="let subCategory of subCategories" [value]="subCategory.categoryId">
+                    {{subCategory.categoryName}}
+                  </option>
+
+                </select>
+                <div *ngFor="let validation of validation_messages.subCategoryId">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('subCategoryId').hasError(validation.type) && (addConsultantForm.get('subCategoryId').dirty || addConsultantForm.get('subCategoryId').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+<!--             <div class="form-group row">
+              <div class="col-md-12">
+                <label>Degree</label>
+                <ng-multiselect-dropdown name="degree" formControlName="degree" [data]="degrees"
+                  [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onChange)="listOnSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
+                <div *ngFor="let validation of validation_messages.degree">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('degree').hasError(validation.type) && (addConsultantForm.get('degree').dirty || addConsultantForm.get('degree').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div> -->
+            <!-- <div class="form-group row">
+              <div class="col-md-12">
+                <label>Category</label>
+                <jqxDropDownList #categoryDropdown formControlName="categoryId" [width]="200" [height]="25" [source]="dataAdapter1" [selectedIndex]="1" [displayMember]="'categoryName'"
+                [valueMember]="'categoryId'">
+                  </jqxDropDownList>
+
+
+                <div style="float: left; margin-left: 20px; font-size: 13px; font-family: Verdana">
+                  <div #log></div>
+                  <div #checkedItemsLog style="max-width: 300px; margin-top: 20px"></div>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Description In English </label>
+                <textarea class="form-control" maxLength="500" formControlName="description_english"></textarea>
+                <!-- <textarea class="form-control" formControlName="description[1][description]"></textarea> -->
+                <!-- <input type="hidden" name="_english" formControlName="description[1][language_id]" value="english"> -->
+                <span style="color:#da7e0e">Max Character Limit is 500</span>
+                <div class="text-danger" *ngIf="DescEnglishError"><strong>Description English can't be empty.</strong></div>
+                <div *ngFor="let validation of validation_messages.description_english">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('description_english').hasError(validation.type) && (addConsultantForm.get('description_english').dirty || addConsultantForm.get('description_english').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Description In Arabic </label>
+                <textarea class="form-control" maxLength="500" formControlName="description_arabic"></textarea>
+                <span style="color:#da7e0e">Max Character Limit is 500</span>
+                <div class="text-danger" *ngIf="DescArabicError"><strong>Description Arabic can't be empty.</strong></div>
+                <div *ngFor="let validation of validation_messages.description_arabic">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('description_arabic').hasError(validation.type) && (addConsultantForm.get('description_arabic').dirty || addConsultantForm.get('description_arabic').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mt-3">
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Email Address</label>
+                <input type="text" formControlName="emailAddress" class="form-control" [email]="true">
+                <div *ngIf="EmailError && !addConsultantForm.get('emailAddress').errors && submitted" class="text-danger"><strong>{{EmailError}}</strong></div>
+                <div *ngFor="let validation of validation_messages.emailAddress">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('emailAddress').hasError(validation.type) && (addConsultantForm.get('emailAddress').dirty || addConsultantForm.get('emailAddress').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Password</label>
+                <input type="password" formControlName="password" class="form-control">
+                <div *ngFor="let validation of validation_messages.password">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('password').hasError(validation.type) && (addConsultantForm.get('password').dirty || addConsultantForm.get('password').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Date Of Birth</label>
+                <input type="date" onkeydown="return false"  formControlName="DOB" class="form-control" max="{{minAge | date:'yyyy-MM-dd'}}">
+                <div *ngFor="let validation of validation_messages.DOB">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('DOB').hasError(validation.type) && (addConsultantForm.get('DOB').dirty || addConsultantForm.get('DOB').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+                <!-- <ng-datepicker options formControlName="DOB" ></ng-datepicker> -->
+                <!-- <input type="text" ngbDatepicker #d="ngbDatepicker"/> -->
+                <!-- <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                         name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Experience</label>
+                <input type="text" digit="2" formControlName="experience" appTwoDigitDecimaNumber class="form-control" >
+                <div *ngFor="let validation of validation_messages.experience">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('experience').hasError(validation.type) && (addConsultantForm.get('experience').dirty || addConsultantForm.get('experience').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Language</label>
+                  <div class="row">
+                      <label class="col-sm-2 customCheckbox mb-0" formArrayName="language" *ngFor="let order of addConsultantForm.get('language')['controls']; let i = index">
+                          <input type="checkbox" [formControlName]="i" /> 
+                          <span>{{speakUnderstandLanguages[i].lookupValue}}</span>
+                      </label>
+                  </div>
+                <div *ngFor="let validation of validation_messages.language">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('language').hasError(validation.type) && (addConsultantForm.get('language').dirty || addConsultantForm.get('language').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+          </div>
+            
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Price</label>
+                <input type="text" digit="2" decimal="2"  formControlName="price" class="form-control" appTwoDigitDecimaNumber>
+                <div *ngFor="let validation of validation_messages.price">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('price').hasError(validation.type) && (addConsultantForm.get('price').dirty || addConsultantForm.get('price').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Commission Percentage</label>
+                <input type="text" digit="3" decimal="2" formControlName="commissionPercentage" class="form-control" appTwoDigitDecimaNumber>
+                <div *ngFor="let validation of validation_messages.commissionPercentage">
+                  <div class="text-danger"
+                    *ngIf="addConsultantForm.get('commissionPercentage').hasError(validation.type) && (addConsultantForm.get('commissionPercentage').dirty || addConsultantForm.get('commissionPercentage').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <div class="ml-4">
+                  <input class="form-check-input" type="checkbox" formControlName="userStatusId" id="isApprove">
+                  <label class="form-check-label" for="isApprove">Is Approved?</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group text-center">
+          <input type="Submit" name="Submit" id="Submit" [disabled]="!addConsultantForm.valid" value="Submit"
+            class="btn btn-sub">
+            <a class="ml-2" routerLink="/consultant"><button class="addbtn">Cancel</button></a>
+          <div class="loadbtn">
+            <img *ngIf="loading" class="pl-2"
+              src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+<!-- /.box-body -->
+
+<!-- <script>
+function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('.your_picture_image')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script> -->

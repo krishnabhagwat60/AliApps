@@ -1,0 +1,38 @@
+.app-header {
+    background-color: #2f3b4c;
+    border: none;
+}
+
+.title{
+    margin-bottom: 0px;
+    flex: 1;
+}
+.title h3{
+font-size: 24px;
+color: #F5C403;
+margin-bottom: 0px;
+line-height: 18px;
+text-align: center;
+}
+// .title h3:before {
+//     content: "";
+//     position: absolute;
+//     bottom: 8px;
+//     left: 49%;
+//     width: 300px;
+//     height: 2px;
+//     background-image: radial-gradient(circle at center, #2f3b4b 0%, #2f3b4b 29%, #ffc300 100%);
+// }
+.title .linesback{
+    // position: absolute;
+    // bottom: 8px;
+    // left: 49%;
+    display: inline-block;
+    width: 300px;
+    height: 2px;
+    background-image: radial-gradient(circle at center, #2f3b4b 0%, #2f3b4b 29%, #ffc300 100%);
+}
+.mr-18{
+    margin-right: 18px;
+}
+

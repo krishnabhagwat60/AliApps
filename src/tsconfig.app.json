@@ -1,0 +1,37 @@
+{
+  "extends": "../tsconfig.json",
+  "target": "es5",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "consultant/consultant_admin",
+    "module": "es2015",
+    "types": [],
+    "paths": {
+      "@angular/*": [
+        "../node_modules/@angular/*"
+      ]
+    }
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ],
+ "optimization": {
+      "noEmitOnErrors": false,
+  },  
+  "files": [
+    "app/app.module.ts",
+    "app/views/consultant/consultant.module.ts",
+    "app/views/widgets/widgets.module.ts",
+    "app/views/dashboard/dashboard.module.ts",
+    "app/views/configuration/configuration.module.ts",
+    "app/views/managesupplier/managesupplier.module.ts",
+    "app/views/users/users.module.ts",
+    "main.ts",
+    "polyfills.ts",
+    "../node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxdropdownlist.ts",
+    "../node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxlistbox.ts"  
+      
+  ]
+}
+ 

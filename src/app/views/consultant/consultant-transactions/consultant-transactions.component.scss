@@ -1,0 +1,58 @@
+.action a {
+    font-size: 20px;
+}
+
+.datatable {
+    border-radius: 5px;
+    tr {
+        border-radius: 5px;
+        th {
+            background: #F5C403;
+            &:first-child {
+                border-radius: 5px 0 0 0;
+            }
+            &:last-child {
+                border-radius: 0 5px 0 0;
+            }
+        }
+        &:last-child {
+            td {
+                &:first-child {
+                    border-radius: 5px 0 0 0;
+                }
+                &:last-child {
+                    border-radius: 0 5px 0 0;
+                }
+            }
+        }
+    }
+}
+.btn-view{
+    background: #000 !important;
+    color: #ffc400 !important;
+    border: none !important;
+    border-radius: 5px !important;
+}
+.wallet{
+    background: #F5C403;
+    color: #000;
+    padding: 5px ;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+table.dataTable thead {
+    .sorting_asc {
+    background: #F5C403;
+    background-image: url(../../../../assets/img/sort_asc.png);
+    background-repeat: no-repeat;
+    background-position: center left; 
+    }
+    .sorting_desc {
+    background: #F5C403;
+    background-image: url(../../../../assets/img/sort_desc.png);
+    background-repeat: no-repeat;
+    background-position: center left; 
+    }
+}

@@ -1,0 +1,78 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="mb-4 d-flex justify-content-end position-relative" style="height: 35px;">
+    
+    <div class="alert alert-success" *ngIf="success"  [hidden]="displayPopup">        
+        <div class="alert-success"><i class="fa fa-check-circle"></i> {{success}}</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error" [hidden]="displayPopup">        
+        <div class="alert-danger"><i class="fa fa-time-circle"></i> {{error}}</div>
+      </div>
+</div>
+<div class="card-group mt-5">
+    <div class="card">
+      <div class="card-body">
+          
+        <form [formGroup]="addNotificationForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 ">
+              <div class="form-group row">
+              <div class="col-md-12" >
+                <label>Select Consultant</label>
+                <select class="form-control" formControlName="providerId" *ngIf="allUsers?.length != 0">
+
+                  <option value="">Select</option>
+                  <option *ngFor="let users of allUsers" [value]="users._id">
+                    {{users.firstName}}
+                  </option>
+
+                </select>
+              </div>
+
+
+              </div>
+
+
+<!--               <div class="form-group row">
+                <div class="col-md-12">
+                  <label>Title</label>
+                  <input name="title" maxLength="20" formControlName="title" type="text" class="form-control">
+                  <div class="text-danger" *ngIf="TitleError"><strong>Title Can't be empty</strong></div>
+                  <div *ngFor="let validation of validation_messages.title">
+                    <div class="text-danger"
+                      *ngIf="addNotificationForm.get('title').hasError(validation.type) && (addNotificationForm.get('title').dirty || addNotificationForm.get('title').touched)">
+                      <strong>{{validation.message}}</strong></div>
+                  </div>
+                </div>
+              </div> -->
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label>Message</label>
+                  
+                  
+                  <textarea name="message" formControlName="message" maxlength="100" class="form-control" rows="3"></textarea>
+                  <span style="color:#da7e0e">Max Character Limit is 100</span>
+                  <div class="text-danger" *ngIf="MessageError"><strong>Message Can't be empty</strong></div>
+                  <div *ngFor="let validation of validation_messages.message">
+                    <div class="text-danger"
+                      *ngIf="addNotificationForm.get('message').hasError(validation.type) && (addNotificationForm.get('message').dirty || addNotificationForm.get('message').touched)">
+                      <strong>{{validation.message}}</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group text-center">
+            <input type="Submit" name="Submit" id="Submit" [disabled]="!addNotificationForm.valid" value="Send"
+              class="btn btn-sub">
+              <div class="loadbtn">
+            <img *ngIf="loading" class="pl-2"
+              src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.box-body -->

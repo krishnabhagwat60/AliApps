@@ -1,0 +1,82 @@
+<!-- SELECT2 EXAMPLE -->
+
+<div class="card-group mt-5">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="alert alert-success" *ngIf="success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div class="alert-success">{{success}}</div>
+      </div>
+      <form [formGroup]="addAdminForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6 mt-3">
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Name</label>
+                <input name="name" maxLength="30" formControlName="name" type="text" class="form-control">
+                <div class="text-danger" *ngIf="NameError"><strong>Name can't be empty.</strong></div>
+                <div *ngFor="let validation of validation_messages.name">
+                  <div class="text-danger"
+                    *ngIf="addAdminForm.get('name').hasError(validation.type) && (addAdminForm.get('name').dirty || addAdminForm.get('name').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Email Address</label>
+                <input type="text" formControlName="emailAddress" class="form-control" [email]="true">
+                <div *ngIf="EmailError && !addAdminForm.get('emailAddress').errors && submitted" class="text-danger"><strong>{{EmailError}}</strong></div>
+                <div *ngFor="let validation of validation_messages.emailAddress">
+                  <div class="text-danger"
+                    *ngIf="addAdminForm.get('emailAddress').hasError(validation.type) && (addAdminForm.get('emailAddress').dirty || addAdminForm.get('emailAddress').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Password</label>
+                <input type="password" formControlName="password" class="form-control">
+                <div *ngFor="let validation of validation_messages.password">
+                  <div class="text-danger"
+                    *ngIf="addAdminForm.get('password').hasError(validation.type) && (addAdminForm.get('password').dirty || addAdminForm.get('password').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+        </div>
+</div>
+        <div class="form-group text-center">
+          <input type="Submit" name="Submit" id="Submit" [disabled]="!addAdminForm.valid" value="Submit"
+            class="btn btn-sub">
+            <a class="ml-2" routerLink="/admin"><button class="addbtn">Cancel</button></a>
+          <div class="loadbtn">
+            <img *ngIf="loading" class="pl-2"
+              src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+<!-- /.box-body -->
+
+<!-- <script>
+function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('.your_picture_image')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script> -->

@@ -1,0 +1,58 @@
+<div class="mb-4 d-flex justify-content-between position-relative">
+    <a routerLink="/language/add"><button class="addbtn"><i class="fa fa-plus"></i> Add Language</button></a>
+    <div class="alert alert-success" *ngIf="success"  [hidden]="displayPopup">        
+        <div class="alert-success"><i class="fa fa-check-circle"></i> {{success}}</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error" [hidden]="displayPopup" style="max-width:39%">        
+        <div class="alert-danger"><i class="fa fa-times-circle"></i> {{error}}</div>
+      </div>
+</div>
+
+<table datatable [dtOptions]="dtOptions"  dt-column-defs="dtOptions.columnDefs" class="row-border hover datatable" width="100%">
+  <thead>
+    <tr>
+      <th class="sorting_disabled">SR#</th>
+      <th>Name</th>
+      <!-- <th>Created Date</th> -->
+      <th width="120" style="width: 120px !important; text-align: right">Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="language?.length != 0">
+    <tr *ngFor="let language of language; let i = index">
+      <td>{{startRowCount+i+1}}</td>
+      <td> {{ language.lookupValue }}</td>
+      <!-- <td>{{language.createdDateTime| date : 'yyyy-MM-dd' }}</td> -->
+      <td class="action" align="right">
+        <a [routerLink]="['/language/edit/', language.lookupDetailsId]" class="text-danger"><img src="assets/img/icons/edit.png" title="Edit"/></a>
+        &nbsp;
+        <a (click)="open(content, language.lookupDetailsId)" class="text-danger"><img src="assets/img/icons/delete.png" title="Remove"/></a>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="language?.length == 0">
+    <tr>
+      <td colspan="3" class="no-data-available">No data!</td>
+    </tr>
+  <tbody>
+</table>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+  <div class="modal-body">
+    Are you sure want to delete?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="addbtn" (click)="deleteLanguage(languageId)">Yes</button>
+    <button type="button" class="addbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+
+
+
+<hr>

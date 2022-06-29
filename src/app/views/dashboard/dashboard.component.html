@@ -1,0 +1,140 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12 pb-2 text-right">
+            <label [hidden]="!resetDashboardDate">Last Reset : {{resetDashboardDate | date : 'dd-MMM-yyyy, HH:mm'}}</label>
+            <button class="btn btn-primary" (click)="resetDashboard()"><i class="fa fa-refresh"></i> Reset</button>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <div class="card first text-white bg-info">
+                <div class="card-body pb-0">
+                    <button type="button" class="btn btn-transparent p-0 float-right">
+            <img src="assets/img/Layer_794.png" class="img_fluid">
+          </button>
+                    <br>
+                    <div class="text-title">Total Consultant</div>
+                    <div class="text-value" *ngIf="dashboard">{{dashboard.totalConsultant}}</div>
+                </div>
+
+            </div>
+        </div>
+        <!--/.col-->
+        <div class="col-sm-6 col-lg-4">
+            <div class="card second text-white bg-primary">
+                <div class="card-body pb-0">
+                    <button type="button" class="btn btn-transparent p-0 float-right">
+              <img src="assets/img/Layer_795.png">
+            </button>
+                    <br>
+                    <div class="text-title">Total User</div>
+                    <div class="text-value" *ngIf="dashboard">{{dashboard.totalUser}}</div>
+                </div>
+
+            </div>
+        </div>
+        <!--/.col-->
+        <div class="col-sm-6 col-lg-4">
+            <div class="card third text-white bg-warning">
+                <div class="card-body pb-0">
+                    <button type="button" class="btn btn-transparent p-0 float-right">
+              <img src="assets/img/Layer-796.png">
+            </button>
+                    <br>
+                    <div class="text-title">Revenue</div>
+                    <div class="text-value" *ngIf="dashboard">{{dashboard.totalRevenue.toFixed(0)}} {{dashboard.currencySymbol}}</div>
+                </div>
+
+            </div>
+        </div>
+        <!--/.col-->
+        <div class="col-sm-6 col-lg-4">
+            <div class="card fourth text-white bg-danger">
+                <div class="card-body pb-0">
+                    <button type="button" class="btn btn-transparent p-0 float-right">
+              <img src="assets/img/Layer_797.png">
+            </button>
+                    <br>
+                    <div class="text-title">Total Earnings</div>
+                    <div class="text-value" *ngIf="dashboard">{{dashboard.totalEarnings.toFixed(0)}} {{dashboard.currencySymbol}}</div>
+                </div>
+
+            </div>
+        </div>
+        <!--/.col-->
+        <div class="col-sm-6 col-lg-4">
+            <div class="card fifth text-white bg-danger">
+                <div class="card-body pb-0">
+                    <button type="button" class="btn btn-transparent p-0 float-right">
+              <img src="assets/img/ic5.png">
+            </button>
+                    <br>
+                    <div class="text-title">Weekly Earnings</div>
+                    <div class="text-value" *ngIf="dashboard">{{dashboard.weeklyEarnings.toFixed(0)}} {{dashboard.currencySymbol}}</div>
+                </div>
+
+            </div>
+        </div>
+        <!--/.col-->
+        <div class="col-sm-6 col-lg-4">
+            <div class="card sixth text-white bg-danger">
+                <div class="card-body pb-0">
+                    <button type="button" class="btn btn-transparent p-0 float-right">
+              <img src="assets/img/ic6.png">
+            </button>
+                    <br>
+                    <div class="text-title">Monthly Earnings</div>
+                    <div class="text-value" *ngIf="dashboard">{{dashboard.monthlyEarnings.toFixed(0)}} {{dashboard.currencySymbol}}</div>
+                </div>
+
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+    <!--/.row-->
+    <!--/.card-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Recent Transaction
+                   
+                </div>
+                <div class="card-body">
+                    <table class="table table-responsive-sm table-hover table-outline mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Provider Name</th>
+                                <th>Consumer Name</th>
+                                <!-- <th>Appointment ID</th> -->
+                                <th style="text-align:right">Total Price(KD)</th>
+                                <th style="text-align:right">Provider Price(KD)</th>
+                                <th style="text-align:right">Commission(%)</th>
+                                <th style="text-align:right">Commission Price(KD)</th>
+                                <th>Date</th>                                
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="appointments?.length != 0">
+                            <tr *ngFor="let appointment of appointments">
+                                <td class="ellipsis">
+                                    <div class="avatar">
+                                        <!-- <img src="assets/img/avatars/1.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" *ngIf="appointment.providerImage == ''"> -->
+                                        <img src="{{appointment.providerImage}}" height="50" width="50" class="img-avatar" >
+                                    </div>
+                                    <span class="">{{appointment.providerName | slice:0:19 }}</span>
+                                </td>
+                                <td class="ellipsis">{{appointment.consumerName}}</td>
+                                <!-- <td>{{appointment.appointmentId}}</td> -->
+                                <td align="right">{{appointment.price.toFixed(0)}}</td>
+                                <td align="right">{{appointment.totalPrice !=null ? appointment.totalPrice.toFixed(0) : ''}}</td>
+                                <td align="right">{{appointment.commissionPercentage !=null ?appointment.commissionPercentage.toFixed(0) : ''}}</td>
+                                <td align="right">{{appointment.commissionPrice !=null ?appointment.commissionPrice.toFixed(0) : ''}}</td>
+                                <td>{{appointment.createdDateTime| date : 'dd-MMM-yyyy, HH:mm'}}</td>                                
+                            </tr>                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+    </div>
+    <!--/.row-->
+</div>

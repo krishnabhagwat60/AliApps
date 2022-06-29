@@ -1,0 +1,36 @@
+[{
+                "categoryId": "5ccacad4dbe4971ad419b1a9",
+                "categoryCode": "Chefs",
+                "imageURL": "http://192.168.0.126:9007/Assets/Images/Category/chef_icon@3x.png",
+                "categoryName": "Chefs",
+                "categoryDescription": ""
+            },
+            {
+                "categoryId": "5cb5a179dbe4973a7ce65c3f",
+                "categoryCode": "Doctor",
+                "imageURL": "http://192.168.0.126:9007/Assets/Images/Category/doctor_icon@3x.png",
+                "categoryName": "Doctor",
+                "categoryDescription": ""
+            },
+            {
+                "categoryId": "5ccaca9fdbe4971ad419b1a8",
+                "categoryCode": "Engineers",
+                "imageURL": "http://192.168.0.126:9007/Assets/Images/Category/engineer_icon@3x.png",
+                "categoryName": "Engineers",
+                "categoryDescription": ""
+            },
+            {
+                "categoryId": "5ccaca8adbe4971ad419b1a7",
+                "categoryCode": "Lawyers",
+                "imageURL": "http://192.168.0.126:9007/Assets/Images/Category/lawyer_icon@3x.png",
+                "categoryName": "Lawyers",
+                "categoryDescription": ""
+            },
+            {
+                "categoryId": "5ccacadedbe4971ad419b1aa",
+                "categoryCode": "Sports Consulting",
+                "imageURL": "http://192.168.0.126:9007/Assets/Images/Category/sports_icon@3x.png",
+                "categoryName": "Sports Consulting",
+                "categoryDescription": ""
+            }
+            ]

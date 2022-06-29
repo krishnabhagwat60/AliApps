@@ -1,0 +1,81 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <legend>Add User</legend>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="form-group">
+        <label for="">First Name</label>
+        <input type="text" class="form-control" formControlName="firstName" id="" placeholder="Input field">
+        <span *ngIf="!userForm.get('firstName').value && userForm.get('firstName').touched"></span>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="form-group">
+        <label for="">Middle Name</label>
+        <input type="text" class="form-control" formControlName="middleName" id="" placeholder="Input field">
+        <span *ngIf="!userForm.get('middleName').value && userForm.get('middleName').touched"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="form-group">
+        <label for="">Last Name</label>
+        <input type="text" class="form-control" formControlName="lastName" id="" placeholder="Input field">
+        <span *ngIf="!userForm.get('lastName').value && userForm.get('lastName').touched"></span>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="form-group">
+        <label for="">Email Address</label>
+        <input type="text" class="form-control" formControlName="emailAddress" id="" placeholder="Input field">
+        <span *ngIf="!userForm.get('emailAddress').value && userForm.get('emailAddress').touched"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="form-group">
+        <label for="">Mobile No.</label>
+        <input type="text" class="form-control" formControlName="mobileNo" id="" placeholder="Input field">
+        <span *ngIf="!userForm.get('mobileNo').value && userForm.get('mobileNo').touched"></span>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="form-group">
+        <label for="">Date Of Birth</label>
+        <input type="date" class="form-control" formControlName="DOB" id="" placeholder="Input field">
+        <span *ngIf="!userForm.get('DOB').value && userForm.get('DOB').touched"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="form-group">
+        <label for="">Gender</label>
+        <div class="radio">
+          <label>
+            <input type="radio" name="genderId" id="input" formControlName="genderId" value="1" checked="checked">
+            Male
+          </label>
+          <label>
+            <input type="radio" name="genderId" id="input" formControlName="genderId" value="2">
+            Female
+          </label>
+          <label>
+            <input type="radio" name="genderId" id="input" formControlName="genderId" value="0">
+            Other
+          </label>
+        </div>
+        <span *ngIf="!userForm.get('genderId').value && userForm.get('genderId').touched"></span>
+      </div>
+    </div>
+  </div>
+  
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a routerLink="/users"><button type="button" class="addbtn">Cancel</button></a>
+</form>

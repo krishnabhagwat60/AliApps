@@ -1,0 +1,52 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="card-group mt-5">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="alert alert-success" *ngIf="success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div class="alert-success">{{success}}</div>
+      </div>
+      <form [formGroup]="addPlanForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6 ">
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Price</label>
+                <input name="price" digit="7" decimal="3" formControlName="price" maxLength="7" type="text" class="form-control" appTwoDigitDecimaNumber>
+                <div *ngFor="let validation of validation_messages.price">
+                  <div class="text-danger"
+                    *ngIf="addPlanForm.get('price').hasError(validation.type) && (addPlanForm.get('price').dirty || addPlanForm.get('price').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Note</label>
+                <input name="note" formControlName="note" maxLength="30" type="text" class="form-control">
+                <div *ngFor="let validation of validation_messages.note">
+                  <div class="text-danger"
+                    *ngIf="addPlanForm.get('note').hasError(validation.type) && (addPlanForm.get('note').dirty || addPlanForm.get('note').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <input type="Submit" name="Submit" id="Submit" [disabled]="!addPlanForm.valid" value="Submit"
+            class="btn btn-sub">
+            <a class="ml-2" routerLink="/plans"><button class="addbtn">Cancel</button></a>
+            <div class="loadbtn">
+          <img *ngIf="loading" class="pl-2"
+            src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+<!-- /.box-body -->

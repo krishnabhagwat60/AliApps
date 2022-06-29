@@ -1,0 +1,85 @@
+<div class="card-group mt-5">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="alert alert-success" *ngIf="success" [hidden]="displayPopup">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div class="alert-success">{{success}}</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error" [hidden]="displayPopup">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div class="alert-danger">{{error}}</div>
+      </div>
+      <form [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-12 text-center profilepic">
+            <input type="file" accept=".png" class="inputfile" formControlName="image" name="your_picture"
+              id="your_picture" (change)="readURL($event);" data-multiple-caption="{count} files selected"
+              accept="image/png" ng2FileSelect [uploader]="uploader" />
+            <label class="position-relative" for="your_picture">
+              <figure>
+                <img [src]="imageSrc || 'assets/img/images.png'" alt="" class="your_picture_image">
+              </figure>
+              <span class="file-button" style="bottom:-10px !important">
+                <i class="fa fa-plus"></i></span>
+            </label>
+            <span class="hints mt-2 mb-2" style="color:#da7e0e">Please upload only .png images</span>
+            <span class="text-danger" *ngIf="imageValidate == false">Only png images are allowed.</span>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-6 ">
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label *ngIf="categoryId == ''">Category Name (English)</label>
+                <label *ngIf="categoryId != ''">Sub Category Name (English)</label>
+                <input name="name_english" appStringOnly formControlName="name_english" maxLength="20" type="text" class="form-control">
+                <span style="color:#da7e0e">Max Character Limit is 20</span>
+                <div class="text-danger" *ngIf="NameEnglishError"><strong>Category Name in English can't be empty.</strong></div>
+                <div *ngFor="let validation of validation_messages.name_english">
+                  <div class="text-danger"
+                    *ngIf="addCategoryForm.get('name_english').hasError(validation.type) && (addCategoryForm.get('name_english').dirty || addCategoryForm.get('name_english').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label *ngIf="categoryId == ''">Category Name (Arabic)</label>
+                <label *ngIf="categoryId != ''">Sub Category Name (Arabic)</label>
+                <input name="name_arabic" appStringOnly formControlName="name_arabic" maxLength="20" type="text" class="form-control">
+                <span style="color:#da7e0e">Max Character Limit is 20</span>
+                <div class="text-danger" *ngIf="NameArabicError"><strong>Category Name in Arabic can't be empty.</strong></div>
+                <div *ngFor="let validation of validation_messages.name_arabic">
+                  <div class="text-danger"
+                    *ngIf="addCategoryForm.get('name_arabic').hasError(validation.type) && (addCategoryForm.get('name_arabic').dirty || addCategoryForm.get('name_arabic').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="categoryId == ''">
+              <div class="col-md-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" formControlName="hasSubCategory" id="hasSubCategory">
+                  <label class="form-check-label" for="hasSubCategory">
+                    It Has Sub Category?
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <input type="Submit" name="Submit" id="Submit" [disabled]="!addCategoryForm.valid" value="Submit"
+            class="btn btn-sub">
+            <a *ngIf="categoryId != ''" class="ml-2" routerLink="/categories/sub/{{categoryId}}"><button class="addbtn">Cancel</button></a>
+                    <a *ngIf="categoryId == ''" class="ml-2" routerLink="/categories"><button class="addbtn">Cancel</button></a>
+          <div class="loadbtn">
+            <img *ngIf="loading" class="pl-2"
+              src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </div>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

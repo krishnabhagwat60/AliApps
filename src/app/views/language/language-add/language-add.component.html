@@ -1,0 +1,54 @@
+<!-- SELECT2 EXAMPLE -->
+<div class="card-group mt-5">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="alert alert-success" *ngIf="success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <div class="alert-success">{{success}}</div>
+      </div>
+      <form [formGroup]="addLanguageForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6 ">
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Language Name (English)</label>
+                <input name="name_english" maxLength="30" formControlName="name_english" type="text" class="form-control">
+                <div class="text-danger" *ngIf="NameEnglishError"><strong>Language Name in English can't be empty.</strong></div>
+                <div *ngFor="let validation of validation_messages.name_english">
+                  <div class="text-danger"
+                    *ngIf="addLanguageForm.get('name_english').hasError(validation.type) && (addLanguageForm.get('name_english').dirty || addLanguageForm.get('name_english').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <label>Language Name (Arabic)</label>
+                <input name="name_arabic" maxLength="30" formControlName="name_arabic" type="text" class="form-control">
+                <div class="text-danger" *ngIf="NameArabicError"><strong>Language Name in Arabic can't be empty.</strong></div>
+                <div *ngFor="let validation of validation_messages.name_arabic">
+                  <div class="text-danger"
+                    *ngIf="addLanguageForm.get('name_arabic').hasError(validation.type) && (addLanguageForm.get('name_arabic').dirty || addLanguageForm.get('name_arabic').touched)">
+                    <strong>{{validation.message}}</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <input type="Submit" name="Submit" id="Submit" [disabled]="!addLanguageForm.valid" value="Submit"
+            class="btn btn-sub">
+            <a class="ml-2" routerLink="/language"><button class="addbtn">Cancel</button></a>
+            <div class="loadbtn">
+          <img *ngIf="loading" class="pl-2"
+            src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /.row -->
+</div>
+<!-- /.box-body -->

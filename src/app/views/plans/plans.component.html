@@ -1,0 +1,64 @@
+<div class="mb-4 d-flex justify-content-between position-relative">
+    <a routerLink="/plans/add"><button class="addbtn"><i class="fa fa-plus"></i> Add Plan</button></a>
+    <div class="alert alert-success" *ngIf="success"  [hidden]="displayPopup">        
+        <div class="alert-success"><i class="fa fa-check-circle"></i> {{success}}</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error" [hidden]="displayPopup">        
+        <div class="alert-danger"><i class="fa fa-time-circle"></i> {{error}}</div>
+      </div>
+</div>
+
+<!-- <div class="mb-4">
+  <a routerLink="/plans/add"><button class="addbtn"><i class="fa fa-plus"></i> Add Plan</button></a>
+</div> -->
+<table datatable [dtOptions]="dtOptions" class="row-border hover datatable" width="100%">
+  <thead>
+    <tr>
+      <th>SR#</th>
+      <th>Price</th>
+      <th>Note</th>
+      <!-- <th>Created Date</th> -->
+      <th width="120" style="width: 120px !important; text-align: right">Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="plans?.length != 0">
+    <tr *ngFor="let plan of plans; let i = index">
+      <td>{{startRowCount+i+1}}</td>
+      <td> {{ plan.price.toFixed(2) }} {{ plan.currencySymbol }}</td>
+      <td> {{ plan.note }}</td>
+      <!-- <td>{{plan.createdDateTime| date : 'yyyy-MM-dd' }}</td> -->
+      <td class="action" align="right">
+        <a [routerLink]="['/plans/edit/', plan.planId]" class="text-danger"><img src="assets/img/icons/edit.png" title="Edit"/></a>
+        &nbsp;
+        <a (click)="open(content, plan.planId)" class="text-danger"><img src="assets/img/icons/delete.png" title="Remove"/></a>
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="plans?.length == 0">
+    <tr>
+      <td colspan="4" class="no-data-available">No data Found!</td>
+    </tr>
+  <tbody>
+</table>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm</h4>
+    <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+  <div class="modal-body">
+    Are you sure want to delete?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="addbtn" (click)="deletePlan(planId)">Yes</button>
+    <button type="button" class="addbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+
+
+
+<hr>
+

@@ -1,0 +1,126 @@
+<div class="card-group mt-5">
+  <div class="card">
+    <div class="card-body">
+
+      <!-- <div class="alert alert-success" *ngIf="success"  [hidden]="displayPopup">        
+        <div class="alert-success"><i class="fa fa-check-circle"></i> {{success}}</div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error" [hidden]="displayPopup" style="max-width:39%">        
+        <div class="alert-danger"><i class="fa fa-times-circle"></i> {{error}}</div>
+      </div> -->
+      <form [formGroup]="supplierForm" (ngSubmit)="onSubmit()">
+        <div class="col-md-3"></div>
+        <!-- <input type="hidden" formControlName="system_configuration_Id"> -->
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Supplier Name</label>
+              <input maxLength="30" formControlName="supplierName" type="text" class="form-control col-sm-12">
+              <div *ngFor="let validation of validation_messages.supplierName">
+                <div class="text-danger"
+                  *ngIf="supplierForm.get('supplierName').hasError(validation.type) && (supplierForm.get('supplierName').dirty || supplierForm.get('supplierName').touched)">
+                  <strong>{{validation.message}}</strong></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label>Email</label>
+              <input maxLength="30" formControlName="email" type="text" class="form-control col-sm-12">
+              <div *ngFor="let validation of validation_messages.email">
+                <div class="text-danger"
+                  *ngIf="supplierForm.get('email').hasError(validation.type) && (supplierForm.get('email').dirty || supplierForm.get('email').touched)">
+                  <strong>{{validation.message}}</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Mobile</label>
+              <input maxLength="30" formControlName="mobile" type="text" class="form-control col-sm-12">
+              <div *ngFor="let validation of validation_messages.mobile">
+                <div class="text-danger"
+                  *ngIf="supplierForm.get('mobile').hasError(validation.type) && (supplierForm.get('mobile').dirty || supplierForm.get('mobile').touched)">
+                  <strong>{{validation.message}}</strong></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label>Commission Value</label>
+              <input maxLength="30" formControlName="commissionValue" type="text" class="form-control col-sm-12">
+              <div *ngFor="let validation of validation_messages.commissionValue">
+                <div class="text-danger"
+                  *ngIf="supplierForm.get('commissionValue').hasError(validation.type) && (supplierForm.get('commissionValue').dirty || supplierForm.get('commissionValue').touched)">
+                  <strong>{{validation.message}}</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Commission Percentage</label>
+              <input maxLength="30" formControlName="commissionPercentage" type="text" class="form-control col-sm-12">
+              <div *ngFor="let validation of validation_messages.commissionPercentage">
+                <div class="text-danger"
+                  *ngIf="supplierForm.get('commissionPercentage').hasError(validation.type) && (supplierForm.get('commissionPercentage').dirty || supplierForm.get('commissionPercentage').touched)">
+                  <strong>{{validation.message}}</strong></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label>Bank ID</label>
+              <input maxLength="30" formControlName="bankId" type="text" class="form-control col-sm-12">
+              <div *ngFor="let validation of validation_messages.bankId">
+                <div class="text-danger"
+                  *ngIf="supplierForm.get('bankId').hasError(validation.type) && (supplierForm.get('bankId').dirty || supplierForm.get('bankId').touched)">
+                  <strong>{{validation.message}}</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Bank Account Holder Name</label>
+              <input maxLength="30" formControlName="bankAccountHolderName" type="text" class="form-control col-sm-12">
+              <div *ngFor="let validation of validation_messages.bankAccountHolderName">
+                <div class="text-danger"
+                  *ngIf="supplierForm.get('bankAccountHolderName').hasError(validation.type) && (supplierForm.get('bankAccountHolderName').dirty || supplierForm.get('bankAccountHolderName').touched)">
+                  <strong>{{validation.message}}</strong></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label>Bank Account</label>
+              <input maxLength="30" formControlName="bankAccount" type="text" class="form-control col-sm-12">
+              <div *ngFor="let validation of validation_messages.bankAccount">
+                <div class="text-danger"
+                  *ngIf="supplierForm.get('bankAccount').hasError(validation.type) && (supplierForm.get('bankAccount').dirty || supplierForm.get('bankAccount').touched)">
+                  <strong>{{validation.message}}</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Iban</label>
+              <input maxLength="30" formControlName="iban" type="text" class="form-control col-sm-12">
+              <div *ngFor="let validation of validation_messages.iban">
+                <div class="text-danger"
+                  *ngIf="supplierForm.get('iban').hasError(validation.type) && (supplierForm.get('iban').dirty || supplierForm.get('iban').touched)">
+                  <strong>{{validation.message}}</strong></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <input type="Submit" name="Submit" id="Submit" [disabled]="!supplierForm.valid" value="Submit"
+            class="btn btn-sub">
+          <a class="ml-2" routerLink="/configuration"><button class="addbtn">Cancel</button></a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
